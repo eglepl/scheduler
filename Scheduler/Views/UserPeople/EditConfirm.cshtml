@@ -1,0 +1,45 @@
+﻿@model Scheduler.Models.ManagePatientViewModels.PatientEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+<h2>Patient</h2>
+
+<div>
+    <h4>Patient</h4>
+    <hr />
+    <div>
+        <h4>Patient</h4>
+        <hr />
+        <div>
+            <ul>
+
+                <li>@Model.Name</li>
+                <li>@Model.LastName</li>
+                <li>@Model.BirthDate</li>
+                <li>@Model.Sex</li>
+                <li>@Model.PersonalCode</li>
+            </ul>
+        </div>
+    </div>
+    <form asp-action="EditConfirm" method="post">
+        @Html.Hidden("ID")
+        @Html.Hidden("Name")
+        @Html.Hidden("LastName")
+        @Html.Hidden("BirthDate")
+        @Html.Hidden("Sex")
+        @Html.Hidden("PersonalCode")
+        <input type="submit" value="Confirm" class="btn btn-default" asp-action="EditConfirm" />
+        <input type="submit" value="Back" class="btn btn-default" asp-controller="UserPeople" asp-action="Edit"/>
+
+    </form>
+
+    <div>
+        <a asp-controller="Manage" asp-action="People">Back to List</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

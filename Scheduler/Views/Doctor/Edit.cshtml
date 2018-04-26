@@ -1,0 +1,325 @@
+﻿@using System.IO
+@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+@using System.Collections.Generic 
+
+@model Scheduler.ViewModels.HealthCenter.DoctorViewModel
+
+@{
+    ViewData["Title"] = "Edit Doctor";
+    Layout = "_LayoutAdmin"; 
+}
+
+<style>
+
+    .image-cropper {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+
+        .image-cropper img {
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
+        }
+</style>
+
+<script>
+    var EditDoctorAfterAvatarUpload = function (e){
+        jQuery("#doctor-image").attr("src", "@Url.Action("Avatar", "Doctor", new { id = Model.ID })?timestamp=" + (new Date().getTime()));
+    }
+
+    var SexWidgedLoaded = function (e) { 
+        console.log(e);
+        e.value = "@Model.Sex";
+    } 
+
+</script>
+<script>
+            var JsSexEnum = [
+                {
+                    Name: "@Person.SexEnum.Male",
+                    Key: @((int)Person.SexEnum.Male)
+                },
+                {
+                    Name: "@Person.SexEnum.Female",
+                    Key: @((int)Person.SexEnum.Female)
+                }
+            ];
+
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            <button id="DoctorEditFormSubmit" class="btn btn-primary">Save</button>
+            <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="DoctorsList">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewData["SuccessMessage"]
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Edit", "Doctor", FormMethod.Post, new { Id = "DoctorEditForm" }))
+        {
+            
+            @Html.Hidden("ID")
+            @(Html.DevExtreme().Form<DoctorViewModel>()
+                    .ID("form")
+                    .Items(items =>
+                    {
+                    items.AddGroup()
+            .CssClass("first-group")
+            .ColCount(4)
+            .Items(groupItems =>
+            {
+            groupItems.AddSimple().Template(@<div class='form-avatar'>
+                                <div class="image-cropper">
+                                    <img id="doctor-image" class="" src="@Url.Action("Avatar", "Doctor", new { id = Model.ID, timestamp = DateTime.Now })" />
+                                </div>
+                                <div class="">
+                                    @(Html.DevExtreme().FileUploader()
+                                                .ID("file-uploader")
+                                                .Name("AvatarFile")
+                                                .Multiple(false)
+                                                .Accept("image/png,image/jpg")
+                                                .UploadMode(FileUploadMode.Instantly)
+                                                .UploadUrl(Url.Action("AvatarUpload", "Doctor", new { id = Model.ID }))
+                                                .OnUploaded("EditDoctorAfterAvatarUpload")
+                                    )
+                                </div>
+                            </div>);
+                groupItems.AddGroup().ColSpan(3).Items(secondGroupItems =>
+                {
+                    secondGroupItems.AddSimpleFor(m => m.IsDisabled);
+                    secondGroupItems.AddSimpleFor(m => m.FirstName);
+                    secondGroupItems.AddSimpleFor(m => m.LastName);
+                    secondGroupItems.AddSimpleFor(m => m.Sex)
+                        .Editor(e => e
+                            .RadioGroup()
+                                .DataSource(d => d.Array().Data(new List<string> { "Male", "Female" }))
+                                .Value(Enum.GetName(typeof(Person.SexEnum), Model.Sex))
+                    );
+                    secondGroupItems.AddSimpleFor(m => m.BirthDate)
+                        .Editor(e => e
+                            .DateBox()
+                            .Width("100%")
+                            .DisplayFormat("yyyy-MM-dd")
+                        )
+                        .IsRequired(false);
+                    secondGroupItems.AddSimpleFor(m => m.PersonalCode);
+                });
+            });
+
+
+                        items.AddGroup()
+        .CssClass("second-group")
+        .ColCount(2)
+        .Items(groupItems =>
+        {
+                groupItems.AddGroup().Items(secondGroupItems =>
+                {
+                    secondGroupItems.AddSimpleFor(m => m.Address);
+                    secondGroupItems.AddSimpleFor(m => m.City);
+                    secondGroupItems.AddSimpleFor(m => m.Position)
+                        .Editor(e => e
+                            .SelectBox()
+                            .DataSource(d => d.StaticJson().Url("~/data/DoctorsPositions.json").Key("ID"))
+                        .DisplayExpr("Title")
+                        .ValueExpr("Title")
+                        .Value(Model.Position)
+
+                        );
+                });
+                groupItems.AddGroup().Items(secondGroupItems =>
+                {
+                    secondGroupItems.AddSimpleFor(m => m.PhoneNumber)
+                        .Editor(e => e
+                            .TextBox()
+                        );
+                    secondGroupItems.AddSimpleFor(m => m.EMail);
+
+                });
+
+                groupItems.AddSimpleFor(m => m.Notes)
+                .ColSpan(2)
+                .Editor(e => e
+                    .TextArea()
+                    .Height(140)
+                );
+            });
+                    })
+                                        .FormData(Model)
+            )
+        }
+    </div><!-- col-md-12-->
+</div>
+
+<script>
+    jQuery("#DoctorEditFormSubmit").click(function (e) {
+        jQuery("#DoctorEditForm").submit();
+    });
+
+</script>
+<script>
+    var DoctorScheduleMonthPickerChanged = function (e) {
+        var dateStr = e.value.toISOString();
+        var dataGrid = jQuery("#doctorSchedulesGridContainer").dxDataGrid('instance');
+        var source = DevExpress.data.AspNet.createStore({
+            key: "VisitDate",
+            loadUrl: "/api/DoctorWebApi/Schedule/@Model.ID/" + dateStr,
+            updateUrl: "/api/DoctorWebApi/ScheduleUpdate/@Model.ID",
+            onBeforeSend: function (method, ajaxOptions) {
+                //ajaxOptions.xhrFields = { withCredentials: true };
+            }
+        });
+        dataGrid.option("dataSource", source);
+        
+    }
+</script>
+
+<div class="row">
+    <hr>
+    <br>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.DevExtreme().DateBox()
+                        .MinZoomLevel(CalendarZoomLevel.Century)
+                        .MaxZoomLevel(CalendarZoomLevel.Year)
+                        .DisplayFormat("yyyy-MM")
+                        .Value(DateTime.Now)
+                        .OnValueChanged("DoctorScheduleMonthPickerChanged")
+        )
+
+        @(Html.DevExtreme().DataGrid<DoctorScheduleViewModel>()
+                        .ID("doctorSchedulesGridContainer")
+                        .DataSource(d => d.RemoteController()
+                            .LoadUrl("/api/DoctorWebApi/Schedule/" + Model.ID + "/" + String.Format("{0:s}", DateTime.Now))
+                            .UpdateUrl("/api/DoctorWebApi/ScheduleUpdate/" + Model.ID).Key("VisitDate"))
+                        .Paging(paging => paging.Enabled(false))
+                        .Editing(editing =>
+                        {
+                            editing.Mode(GridEditMode.Batch);
+                            editing.AllowUpdating(true);
+                        })
+                        .Columns(columns =>
+                        {
+                            columns.AddFor(m => m.VisitDate)
+                                .AllowEditing(false)
+                                .SortOrder(SortOrder.Asc)
+                                .Format("yyyy-MM-dd (EEEE)")
+                                .Caption("Day");
+
+                            columns.AddFor(m => m.VisitScheduleTemplateID)
+                                .Caption("Template")
+                                .AllowSorting(false)
+                                .Lookup(lookup => lookup
+                                .DataSource(d => d.Mvc()
+                                    .Controller("VisitScheduleTemplateWebApi")
+                                    .LoadAction("All").Key("ID"))
+                                    .DisplayExpr("Title")
+                                    .ValueExpr("ID")
+                                );
+
+
+                        })
+                        .RowAlternationEnabled(true)
+                        .MasterDetail(md =>
+                        {
+                            md.Enabled(true);
+                            md.Template(@<text>
+                            
+                            @(Html.DevExtreme().DataGrid<VisitScheduleTemplateTimeViewModel>()
+                                .ColumnAutoWidth(true)
+                                .ShowBorders(true)
+                                .Columns(columns =>
+                                {
+                                    columns.AddFor(m => m.Start).Format("HH:mm");
+                                })
+                                .DataSource(d => d.RemoteController()
+                                    .LoadUrl("/api/VisitScheduleTemplateWebApi/TemplateTimes/<% data.VisitScheduleTemplateID %>")
+                                    
+                                    )
+                                )
+                            
+                            </text>);
+                        })
+        )
+
+    </div>
+</div>
+
+
+@*<div class="row">
+    <div class="col-md-12">
+            @(Html.DevExtreme().DateBox()
+                .MinZoomLevel(CalendarZoomLevel.Century)
+                .MaxZoomLevel(CalendarZoomLevel.Year)
+                .DisplayFormat("yyyy-MM")
+                .Value(DateTime.Now)
+                .OnValueChanged("DoctorScheduleMonthPickerChanged")
+            )
+
+            @(Html.DevExtreme().DataGrid<DoctorScheduleViewModel>()
+                .ID("doctorSchedulesGridContainer")
+                .DataSource(d => d.RemoteController()
+                    .LoadUrl("/api/DoctorWebApi/Schedule/" + Model.ID + "/" + String.Format("{0:s}", DateTime.Now))
+                    .UpdateUrl("/api/DoctorWebApi/ScheduleUpdate/" + Model.ID).Key("VisitDate"))
+                .Paging(paging => paging.Enabled(false))
+                .Editing(editing =>
+                {
+                    editing.Mode(GridEditMode.Batch);
+                    editing.AllowUpdating(true);
+                })
+                .Columns(columns =>
+                {
+                    columns.AddFor(m => m.VisitDate)
+                        .AllowEditing(false)
+                        .SortOrder(SortOrder.Asc)
+                        .Format("yyyy-MM-dd (EEEE)")
+                        .Caption("Day");
+
+                    columns.AddFor(m => m.VisitScheduleTemplateID)
+                        .Caption("Template")
+                        .AllowSorting(false)
+                        .Lookup(lookup => lookup
+                        .DataSource(d => d.Mvc()
+                            .Controller("VisitScheduleTemplateWebApi")
+                            .LoadAction("All").Key("ID"))
+                            .DisplayExpr("Title")
+                            .ValueExpr("ID")
+                        );
+
+
+                })
+                .RowAlternationEnabled(true)
+                
+            )
+
+</div>
+</div>*@
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

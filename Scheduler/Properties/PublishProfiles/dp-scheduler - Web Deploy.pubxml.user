@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA+MaDaxPdaUeFFMuUhOl25AAAAAACAAAAAAAQZgAAAAEAACAAAAB32IKRrwMh5ELraXH9psOBr/SFbDoMCW9DIQ7To2gNbQAAAAAOgAAAAAIAACAAAACIvb2ZBRQIpMeh1GXb9fpom1OCL0/zrZ5EORF5DYAFhoAAAACfdoxwal2bfqlzFzgyonKakY77BON7UncrmAQlpLktVDvvLYEmg150thAD3IJaewURid8Cy3dzudVwsqzJo2Y00H4mpAi0FmAM+jyzsuDImp3NFetTtZw0fQ/lCj4pKVDmaCBKTnFBKbILDk282vTzISOpa9LsxutB2yC8sZ/bk0AAAADAhkRf44vk8Uyj5nxadk3ipjZYmLceTfWOyxnWKmJzgjWLuoq/HZX76XYkegzHfEQesjA1WFhCmEptxb0RpaRk</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:dp-schedulerdbserver.database.windows.net,1433;Initial Catalog=dp-scheduler_db;User Id=dp-schedulerdbadmin@dp-schedulerdbserver;Password=Scheduler12345.</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="Scheduler.Data.ApplicationDbContext">
+      <Value>Data Source=tcp:dp-schedulerdbserver.database.windows.net,1433;Initial Catalog=dp-scheduler_db;User Id=dp-schedulerdbadmin@dp-schedulerdbserver;Password=Scheduler12345.</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

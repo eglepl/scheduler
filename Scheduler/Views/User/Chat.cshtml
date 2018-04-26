@@ -1,0 +1,119 @@
+﻿@using Scheduler.ViewModels.HealthCenter;
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Chat";
+    Layout = "_LayoutAdmin";
+}
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        @(Html.DevExtreme().DataGrid<UserViewModel>()
+            .DataSource(d => d.Mvc()
+                .Controller("UserWebApi")
+                .LoadAction("GetChatParticipants")
+                .Key("UserID")
+            )
+            .RemoteOperations(true)
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.EMail);
+            })
+
+            .SearchPanel(searchPanel => searchPanel
+            .Visible(true)
+            .Width(240)
+            .Placeholder("Search..."))
+            .GroupPanel(p => p.Visible(true))
+            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+            .Height(600)
+            .ShowBorders(true)
+            .RowAlternationEnabled(true)
+            .OnSelectionChanged("userGridOnSelectionChanged")
+            .Selection(s => s.Mode(SelectionMode.Single))
+            .HoverStateEnabled(true)
+        )
+    </div>
+
+    <div class="col-md-6">
+        @(Html.DevExtreme().DataGrid<ChatMessageViewModel>()
+            .ID("ChatMessagesDataGrid")
+            .RemoteOperations(true)
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.From).AllowSorting(false);
+                columns.AddFor(m => m.To).AllowSorting(false);
+                columns.AddFor(m => m.MessageTime).SortOrder(SortOrder.Desc).AllowSorting(false);
+                columns.AddFor(m => m.MessageText).AllowSorting(false);
+            })
+            .SearchPanel(searchPanel => searchPanel
+                .Visible(true)
+                .Width(240)
+                .Placeholder("Search..."))
+            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+            .Height(500)
+            .ShowBorders(true)
+            .RowAlternationEnabled(true)
+        )
+        <form id="ChatMessageNewMessageForm">
+            @(Html.DevExtreme().TextArea().ID("messageTextArea").Name("MessageText"))
+            <button id="sendMessageButton" class="btn btn-primary btn-lg disabled" disabled="disabled">Send</button>
+        </form>
+    </div>
+</div>
+<script>
+    var userGridOnSelectionChanged = function (e) {
+        var dataGrid = jQuery("#ChatMessagesDataGrid").dxDataGrid('instance');
+        var userID = '@Model.Id';
+        var chatUserID = e.currentSelectedRowKeys[0];
+        var source = DevExpress.data.AspNet.createStore({
+            key: "ID",
+            loadUrl: "/api/UserWebApi/GetMessages",
+            loadParams: {
+                userID: userID,
+                chatUserID: chatUserID
+            },       
+            onBeforeSend: function (method, ajaxOptions) {
+                //ajaxOptions.xhrFields = { withCredentials: true };
+            }
+        });
+        dataGrid.option("dataSource", source);
+        jQuery('#ChatMessageNewMessageForm').children('.chat-user-input').remove();
+
+        jQuery('#ChatMessageNewMessageForm').append('<input class="chat-user-input" type="hidden" name="ApplicationUserIDFrom" value="' + userID + '">');
+        jQuery('#ChatMessageNewMessageForm').append('<input class="chat-user-input" type="hidden" name="ApplicationUserIDTo" value="' + chatUserID + '">');
+
+        jQuery("#sendMessageButton").removeClass("disabled").removeAttr("disabled");
+
+        var textArea = jQuery("#messageTextArea").dxTextArea('instance');
+        textArea.focus();
+
+        //setInterval(function () {
+        //    var dataGrid = jQuery("#ChatMessagesDataGrid").dxDataGrid('instance');
+        //    gridInstance.option('loadPanel.enabled', false);
+        //    dataGrid.refresh();
+        //}, 1000)
+    }
+
+    jQuery("#ChatMessageNewMessageForm").submit(function (e) {
+        e.preventDefault();
+        var textArea = jQuery("#messageTextArea").dxTextArea('instance');
+        var chatMessage = jQuery(this).serialize();
+        var msg = textArea.option('value') || "";
+        chatMessage.MessageText = msg;
+        if (msg.length > 0) {
+            console.log(chatMessage.Message);
+            var url = "/api/UserWebApi/ChatMessageSend";
+            jQuery.post(url, chatMessage, function (response) {
+                var dataGrid = jQuery("#ChatMessagesDataGrid").dxDataGrid('instance');
+                dataGrid.refresh();
+                textArea.reset();
+            })
+        }
+
+        
+    });
+</script>
+

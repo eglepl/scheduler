@@ -1,0 +1,57 @@
+2018-04-14T14:40:57.7372590+03:00  [INF] Executing Configure() (e4daa19d)
+2018-04-14T14:40:59.9884608+03:00  [INF] Entity Framework Core "2.0.2-rtm-10011" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-04-14T14:41:03.6968739+03:00  [INF] Executed DbCommand ("431"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0" (0723d8ff)
+2018-04-14T14:41:04.1477491+03:00  [INF] Executed DbCommand ("116"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0" (0723d8ff)
+2018-04-14T14:41:04.2313038+03:00  [INF] Executed DbCommand ("64"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0" (0723d8ff)
+2018-04-14T14:41:04.3084193+03:00  [INF] Executed DbCommand ("42"ms) [Parameters=["@__normalizedEmail_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0" (0723d8ff)
+2018-04-14T14:41:04.7507497+03:00 0HLD1VIDEPK2N:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44327/   (ca22a1cb)
+2018-04-14T14:41:05.4985026+03:00 0HLD1VIDEPK2N:00000001 [INF] Executing action method "Scheduler.Controllers.HomeController.Index (Scheduler)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2018-04-14T14:41:09.9332040+03:00 0HLD1VIDEPK2N:00000001 [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2018-04-14T14:41:12.2278281+03:00 0HLD1VIDEPK2N:00000001 [INF] Executed action "Scheduler.Controllers.HomeController.Index (Scheduler)" in 6781.1283ms (afa2e885)
+2018-04-14T14:41:12.2974319+03:00 0HLD1VIDEPK2O:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44327/lib/jquery-ui/jquery-ui.js   (ca22a1cb)
+2018-04-14T14:41:12.3003866+03:00 0HLD1VIDEPK2N:00000001 [INF] Request finished in 7560.5083ms 200 text/html; charset=utf-8 (791a596a)
+2018-04-14T14:41:12.3190900+03:00 0HLD1VIDEPK2O:00000001 [INF] Request finished in 61.9902ms 404  (791a596a)
+2018-04-14T14:41:32.7228910+03:00 0HLD1VIDEPK2N:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44327/Account/Login   (ca22a1cb)
+2018-04-14T14:41:32.8385105+03:00 0HLD1VIDEPK2N:00000002 [INF] Executing action method "Scheduler.Controllers.AccountController.Login (Scheduler)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2018-04-14T14:41:32.8531184+03:00 0HLD1VIDEPK2N:00000002 [INF] AuthenticationScheme: "Identity.External" signed out. (d3f50c8d)
+2018-04-14T14:41:33.5806406+03:00 0HLD1VIDEPK2N:00000002 [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2018-04-14T14:41:33.6877875+03:00 0HLD1VIDEPK2N:00000002 [INF] Executed action "Scheduler.Controllers.AccountController.Login (Scheduler)" in 907.2536ms (afa2e885)
+2018-04-14T14:41:33.7744389+03:00 0HLD1VIDEPK2N:00000002 [INF] Request finished in 975.0274ms 200 text/html; charset=utf-8 (791a596a)
+2018-04-14T14:41:33.8073674+03:00 0HLD1VIDEPK2O:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44327/lib/jquery-ui/jquery-ui.js   (ca22a1cb)
+2018-04-14T14:41:33.8284339+03:00 0HLD1VIDEPK2O:00000002 [INF] Request finished in 61.1364ms 404  (791a596a)
+2018-04-14T14:41:36.5369094+03:00 0HLD1VIDEPK2N:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44327/Account/ForgotPassword   (ca22a1cb)
+2018-04-14T14:41:36.5898870+03:00 0HLD1VIDEPK2N:00000003 [INF] Executing action method "Scheduler.Controllers.AccountController.ForgotPassword (Scheduler)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2018-04-14T14:41:36.8812335+03:00 0HLD1VIDEPK2N:00000003 [INF] Executing ViewResult, running view at path "/Views/Account/ForgotPassword.cshtml". (9707eebe)
+2018-04-14T14:41:37.5092738+03:00 0HLD1VIDEPK2N:00000003 [INF] Executed action "Scheduler.Controllers.AccountController.ForgotPassword (Scheduler)" in 871.8775ms (afa2e885)
+2018-04-14T14:41:37.5356814+03:00 0HLD1VIDEPK2O:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44327/lib/jquery-ui/jquery-ui.js   (ca22a1cb)
+2018-04-14T14:41:37.5565527+03:00 0HLD1VIDEPK2O:00000003 [INF] Request finished in 74.3435ms 404  (791a596a)
+2018-04-14T14:41:37.5941705+03:00 0HLD1VIDEPK2N:00000003 [INF] Request finished in 982.7023ms 200 text/html; charset=utf-8 (791a596a)
+2018-04-14T14:41:41.8486881+03:00 0HLD1VIDEPK2N:00000004 [INF] Request starting HTTP/1.1 POST http://localhost:44327/Account/ForgotPassword application/x-www-form-urlencoded 209 (ca22a1cb)
+2018-04-14T14:41:41.9491628+03:00 0HLD1VIDEPK2N:00000004 [INF] Executing action method "Scheduler.Controllers.AccountController.ForgotPassword (Scheduler)" with arguments (["Scheduler.Models.AccountViewModels.ForgotPasswordViewModel"]) - ModelState is Valid (ba7f4ac2)
+2018-04-14T14:41:41.9654141+03:00 0HLD1VIDEPK2N:00000004 [INF] Entity Framework Core "2.0.2-rtm-10011" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-04-14T14:41:42.0414277+03:00 0HLD1VIDEPK2N:00000004 [INF] Executed DbCommand ("65"ms) [Parameters=["@__normalizedEmail_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0" (0723d8ff)
+2018-04-14T14:41:42.0611764+03:00 0HLD1VIDEPK2N:00000004 [INF] Executing RedirectResult, redirecting to "/Account/ForgotPasswordConfirmation". (d98d540e)
+2018-04-14T14:41:42.0705496+03:00 0HLD1VIDEPK2N:00000004 [INF] Executed action "Scheduler.Controllers.AccountController.ForgotPassword (Scheduler)" in 202.9418ms (afa2e885)
+2018-04-14T14:41:42.0980719+03:00 0HLD1VIDEPK2N:00000004 [INF] Request finished in 242.9204ms 302  (791a596a)
+2018-04-14T14:41:42.1004289+03:00 0HLD1VIDEPK2O:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44327/Account/ForgotPasswordConfirmation   (ca22a1cb)
+2018-04-14T14:41:42.1492711+03:00 0HLD1VIDEPK2O:00000004 [INF] Executing action method "Scheduler.Controllers.AccountController.ForgotPasswordConfirmation (Scheduler)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2018-04-14T14:41:42.3982553+03:00 0HLD1VIDEPK2O:00000004 [INF] Executing ViewResult, running view at path "/Views/Account/ForgotPasswordConfirmation.cshtml". (9707eebe)
+2018-04-14T14:41:42.4347237+03:00 0HLD1VIDEPK2O:00000004 [INF] Executed action "Scheduler.Controllers.AccountController.ForgotPasswordConfirmation (Scheduler)" in 299.2027ms (afa2e885)
+2018-04-14T14:41:42.4803574+03:00 0HLD1VIDEPK2O:00000004 [INF] Request finished in 365.2644ms 200 text/html; charset=utf-8 (791a596a)
+2018-04-14T14:41:42.5014199+03:00 0HLD1VIDEPK2N:00000005 [INF] Request starting HTTP/1.1 GET http://localhost:44327/lib/jquery-ui/jquery-ui.js   (ca22a1cb)
+2018-04-14T14:41:42.5269050+03:00 0HLD1VIDEPK2N:00000005 [INF] Request finished in 35.164ms 404  (791a596a)

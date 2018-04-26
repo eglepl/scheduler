@@ -1,0 +1,103 @@
+[
+ {
+	"ID": 1,
+	"Title": "Anaesthesiologist"
+ },
+ {	"ID": 2,
+	"Title": "General surgeon"
+ },
+ {	"ID": 3,
+	"Title": "Embryologist"
+ },
+ {	"ID": 4,
+	"Title": "Dermatovenerologist"
+ },
+ {	"ID": 5,
+	"Title": "Ophthalmologist"
+ },
+ {	"ID": 6,
+	"Title": "Dietologist"
+ },
+ {	"ID": 7,
+	"Title": "Ultrasound specialist"
+ },
+ {	"ID": 8,
+	"Title": "Endocrinologist"
+ },
+ {	"ID": 9,
+	"Title": "Rehabilitologist"
+ },
+ {	"ID": 10,
+	"Title": "Gastroenterologist"
+ },
+ {	"ID": 11,
+	"Title": "Cardiologist"
+ },
+ {	"ID": 12,
+	"Title": "Physiotherapist"
+ },
+ {	"ID": 13,
+	"Title": "Vascular surgeon"
+ },
+ {	"ID": 14,
+	"Title": "Breast oncologist"
+ },
+ {	"ID": 15,
+	"Title": "Neonatologist"
+ },
+ {	"ID": 16,
+	"Title": "Neurologist"
+ },
+ {	"ID": 17,
+	"Title": "Odontologist"
+ },
+ {	"ID": 18,
+	"Title": "Ophthalmologist"
+ },
+ {	"ID": 19,
+	"Title": "Orthopaedists-traumatologist"
+ },
+ {	"ID": 20,
+	"Title": "Otorhinolaryngologist"
+ },
+ {	"ID": 21,
+	"Title": "Plastic surgeon"
+ },
+ {	"ID": 22,
+	"Title": "Proctologist"
+ },
+ {	"ID": 23,
+	"Title": "Psychiatrist"
+ },
+ {	"ID": 24,
+	"Title": "Pulmonologist"
+ },
+ {	"ID": 25,
+	"Title": "Radiologist"
+ },
+ {	"ID": 27,
+	"Title": "Rheumatologist"
+ },
+ {	"ID": 28,
+	"Title": "General practitioner"
+ },
+ {	"ID": 29,
+	"Title": "Urologist"
+ },
+ {	"ID": 30,
+	"Title": "Paediatric surgeon"
+ },
+ {	"ID": 31,
+	"Title": "Paediatric cardiologist"
+ },
+ {	"ID": 32,
+	"Title": "Paediatric neurologist"
+ },
+ {	"ID": 33,
+	"Title": "Paediatric ophthalmologist"
+ },
+  {
+    "ID": 34,
+    "Title": "Paediatric orthopaedists traumatologist"
+  }
+]

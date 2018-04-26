@@ -1,0 +1,187 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@ViewData["Title"] - Scheduler</title>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+
+    <link href="~/lib/devextreme/css/dx.common.css" rel="stylesheet" />
+    <link href="~/lib/devextreme/css/dx.light.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/lib/carbon/dist/css/styles.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/popper.js/dist/umd/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/carbon/dist/js/carbon.js"></script>
+    <script src="~/lib/carbon/dist/js/demo.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
+    <script src="~/lib/devextreme/js/dx.all.js"></script>
+    <script src="~/lib/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
+    <script src="~/lib/devextreme/js/dx.aspnet.mvc.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <style>
+        .avatar, .avatar-sm {
+            font-size: 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="navbar page-header p-1">
+            <!--menu mobile-->
+            <a href="#" class="btn btn-link sidebar-mobile-toggle d-lg-none mr-auto">
+                <i class="fa fa-bars"></i>
+            </a>
+            <!--logo-->
+            <a class="navbar-brand" href="#">
+                <img class="logo-image" src="~/images/logo-image.png" alt="logo" style="height: 50px;">
+                <span class="logo-text">Medical Center</span>
+            </a>
+            <!--prapletimas menu-->
+            <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+                <i class="fa fa-bars"></i>
+            </a>
+            <!--notifications icons-->
+            <ul class="navbar-nav ml-auto">
+               
+                <!--user photo dropdown-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="avatar avatar-sm" alt="logo"><i class="fa fa-user-circle"></i></span>
+                        <span class="small ml-1 d-md-down-none">@User.Identity.Name</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-header">Account</div>
+                        <a href="@Url.Action("Index", "Manage")" class="dropdown-item">
+                            <i class="fa fa-user"></i> Profile
+                        </a>
+                        
+                        <div class="dropdown-header">Settings</div>
+                        
+                        <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                            <i class="fa fa-lock"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-container">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <ul class="nav">
+                        <li class="nav-title">Navigation</li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Dashboard")" class="nav-link">
+                                <i class="icon icon-speedometer"></i> Dashboard
+                            </a>
+                        </li>
+
+
+                        @if (User.IsInRole("Patient"))
+    {
+                    <li class="nav-item ">
+                        <a href="@Url.Action("Doctors", "User")" class="nav-link">
+                            <i class="icon icon-target"></i> Doctors
+                        </a>
+                    </li>
+}
+                        @if (User.IsInRole("Patient"))
+    {
+                    <li class="nav-item">
+                        <a href="@Url.Action("People", "UserPeople")" class="nav-link">
+                            <i class="fa fa-users"></i> People
+                        </a>
+                    </li>
+}
+                        @if (User.IsInRole("Patient"))
+    {
+                    <li class="nav-item">
+                        <a href="@Url.Action("Visits", "User")" class="nav-link">
+                            <i class="fa fa-list"></i> Visits
+                        </a>
+                    </li>
+}
+
+                        @if (User.IsInRole("Admin"))
+    {
+                    <li class="nav-item">
+                        <a href="@Url.Action("PatientsList", "Admin")" class="nav-link">
+                            <i class="fa fa-list"></i> Patients
+                        </a>
+                    </li>
+}
+                        @if (User.IsInRole("Admin"))
+    {
+                    <li class="nav-item">
+                        <a href="@Url.Action("DoctorsList", "Admin")" class="nav-link">
+                            <i class="fa fa-list"></i> Doctors
+                        </a>
+                    </li>
+}
+                        @if (User.IsInRole("Admin"))
+    {
+                    <li class="nav-item">
+                        <a href="@Url.Action("All", "VisitScheduleTemplate")" class="nav-link">
+                            <i class="fa fa-clock-o"></i> Visit Templates
+                        </a>
+                    </li>
+}
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Chat", "User")" class="nav-link">
+                                <i class="fa fa-comments"></i> Chat
+                            </a>
+                        </li>
+
+
+                        <li class="nav-title">More</li>
+                        <li class="nav-item nav-dropdown">
+                            <a href="#" class="nav-link nav-dropdown-toggle">
+                                <i class="fa fa-cog"></i> Manage <i class="fa fa-caret-left"></i>
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "Manage")" class="nav-link">
+                                        <i class="fa fa-user"></i> User Profile
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("ChangePassword", "Manage")" class="nav-link">
+                                        <i class="fa fa-lock"></i> Change Password
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+            <div class="content">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

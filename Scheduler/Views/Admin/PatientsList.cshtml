@@ -1,0 +1,107 @@
+﻿@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+
+@{
+    ViewData["Title"] = "Patients List";
+    Layout = "_LayoutAdmin";
+}
+
+<h2>Patients List</h2>
+
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        <script>
+            var JsSexEnum = [
+                {
+                    Name: "@Person.SexEnum.Male",
+                    Key: @((int)Person.SexEnum.Male)
+                },
+                {
+                    Name: "@Person.SexEnum.Female",
+                    Key: @((int)Person.SexEnum.Female)
+                },
+            ];
+
+        </script>
+        @(Html.DevExtreme().DataGrid<AdminPatientViewModel>()
+                .DataSource(d => d.Mvc()
+                    .Controller("AdminWebApi")
+                    .LoadAction("PatientsList")
+                    .UpdateAction("PatientBan")
+                    .Key("ID")
+                )
+                    .RemoteOperations(true)
+                    .Editing(editing =>
+                    {
+                        editing.Mode(GridEditMode.Batch);
+                        editing.AllowUpdating(true);
+                    })
+                    .Columns(columns =>
+                    {
+                    columns.AddFor(m => m.FirstName);
+                    columns.AddFor(m => m.LastName);
+                    columns.AddFor(m => m.BirthDate);
+                    columns.AddFor(m => m.Sex).Lookup(lookup => lookup
+            .DataSource(new JS("JsSexEnum"))
+            .DisplayExpr("Name")
+            .ValueExpr("Key")
+        );
+                    columns.AddFor(m => m.PhoneNumber);
+                    columns.AddFor(m => m.EMail);
+                    columns.Add().Caption("Arrival Statistics").CellTemplate(@<span>
+                        <%= data.NotArrivedVisitsCount%>/<%= data.AllVisitsCount%></span>);
+                    columns.AddFor(m => m.ID)
+                        .AllowSorting(false)
+                        .CellTemplate(@<div class="float-left">
+                            <a class="btn btn-info btn-sm" href="@Url.Action("Details", "People")/<%= value %>">Details</a>
+                            <a class="btn btn-primary btn-sm" href="@Url.Action("Edit", "People")/<%= value %>">Edit</a>
+                        </div>).Width("180px").HeaderCellTemplate(@<div class="dx-datagrid-text-content dx-datagrid-action-column">Actions</div>);
+                    /**/
+                @*.Width("100px").HeaderCellTemplate(@<div class="dx-datagrid-text-content dx-datagrid-action-column">Actions<div>);*@
+            /**/
+                })
+            .SearchPanel(searchPanel => searchPanel
+            .Visible(true)
+            .Width(240)
+            .Placeholder("Search..."))
+            .GroupPanel(p => p.Visible(true))
+            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+            .Height(600)
+            .ShowBorders(true)
+            .MasterDetail(md =>
+            {
+                md.Enabled(true);
+                md.Template(@<text>
+                <div class="master-detail-caption"><%= data.FirstName %> <%= data.LastName %>'s Visits:</div>
+                @(Html.DevExtreme().DataGrid<AdminUserVisitsViewModel>()
+                        .ColumnAutoWidth(true)
+                        .ShowBorders(true)
+                        .Editing(editing =>
+                        {
+                            editing.Mode(GridEditMode.Batch);
+                            editing.AllowUpdating(true);
+                        })
+                        .Paging(p => p.PageSize(5))
+                        .RemoteOperations(true)
+                        .Columns(columns =>
+                        {
+                            columns.AddFor(m => m.VisitDateTime).Format("yyyy-MM-dd HH:mm (EEEE)").SortOrder(SortOrder.Desc).AllowEditing(false);
+                            columns.AddFor(m => m.HasArrived).Width("150px");
+
+                        })
+                        .DataSource(d => d.Mvc()
+                            .Controller("AdminWebApi")
+                            .LoadAction("VisitsList")
+                            .UpdateAction("VisitUpdate")
+                            .LoadParams(new { id = new JS("data.ID") })
+                            .Key("ID")
+                        )
+                )
+                </text>);
+                        })
+
+        )
+    </div>
+</div>

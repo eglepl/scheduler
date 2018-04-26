@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA+MaDaxPdaUeFFMuUhOl25AAAAAACAAAAAAAQZgAAAAEAACAAAADQlomHYNLubPxkwIWi+byU5kNBDiRZtSvmdh3HW1QTDAAAAAAOgAAAAAIAACAAAACvZgZkoH6ScJOqPJiVRPRGFKs9jhH/spqoad1Kwmi1SoAAAAAHMPIxOsn97mL7ERn8r5ZtkNC3dTcODC0y+UJEK+X4zVnhpeT4X8CboisCohDxJWlxM1geyQQ92FA/bk69DhzHIGNY/HF1+GUhHyz7QQ5M7jEtJHmt+oQYh4/0MWM4gChNQz4kk1eauk8KXoSc6BmZumDhxfT8IGz5nvus2BQ/q0AAAABZI2lIPUPnrIoFUpwPGhEpn9Xy1OK/Td8zhkGu0k2rnyec2gGGz+r2VaKutogZkf5n6QKZv4GweIcn43vGivTp</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:scheduler-dbserver3.database.windows.net,1433;Initial Catalog=scheduler;User Id=Admin3@scheduler-dbserver3;Password=EL-scheduler123.</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

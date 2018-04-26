@@ -1,0 +1,77 @@
+﻿@using System.IO
+@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+@using System.Collections.Generic
+
+@model IEnumerable<DoctorSchedule>
+
+@{
+    ViewData["Title"] = "Doctors";
+    Layout = "_LayoutAdmin";
+}
+
+<style>
+
+    .image-cropper {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+
+        .image-cropper img {
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
+        }
+</style>
+
+
+<div class="row">
+    <div class="col-md-12 dev-extreme-egle-grid">
+        @(Html.DevExtreme().DataGrid<DoctorViewModel>()
+            .DataSource(d => d.Mvc()
+                .Controller("UserWebApi")
+                .LoadAction("Doctors")
+                .Key("ID")
+            )
+                .RemoteOperations(true)
+                .Columns(columns =>
+                {
+                    columns.AddFor(m => m.ID).Caption("").AllowSorting(false).CellTemplate(
+                        @<div>
+                             <div class="image-cropper">
+                                 <img id="doctor-image" class="" src="/Doctor/Avatar/<%= data.ID %>?timestamp=@DateTime.Now" />
+                             </div>
+                        </div>
+                );
+            columns.AddFor(m => m.FirstName);
+            columns.AddFor(m => m.LastName);
+            columns.AddFor(m => m.Position);
+            columns.AddFor(m => m.PhoneNumber);
+            columns.AddFor(m => m.EMail);
+            columns.AddFor(m => m.FreeVisitsCount);
+            columns.AddFor(m => m.ID)
+    .AllowSorting(false)
+    .CellTemplate(@<div class="float-left">
+                    <a class="btn btn-info btn-sm" href="@Url.Action("Details", "Doctor")/<%= value %>">Register</a>
+                </div>).Width("90px").HeaderCellTemplate(@<div class="dx-datagrid-text-content dx-datagrid-action-column">Actions</div>);
+                })
+                
+                .SearchPanel(searchPanel => searchPanel
+                .Visible(true)
+                .Width(240)
+                .Placeholder("Search..."))
+                .GroupPanel(p => p.Visible(true))
+                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                .Height(600)
+                .ShowBorders(true)
+                .RowAlternationEnabled(true)
+
+        )
+    </div>
+</div>
+
+

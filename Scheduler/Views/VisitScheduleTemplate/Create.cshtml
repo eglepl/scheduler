@@ -1,0 +1,46 @@
+﻿@model Scheduler.ViewModels.HealthCenter.VisitScheduleTemplateViewModel
+
+@{
+    ViewData["Title"] = "Create Template";
+    Layout = "_LayoutAdmin";
+}
+
+<h2>Create Template</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            <button id="TemplateCreateFormSubmit" class="btn btn-primary">Save</button>
+            <a class="btn btn-outline-primary" asp-controller="VisitScheduleTemplate" asp-action="All">Back to List</a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" id="TemplateCreateForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    jQuery("#TemplateCreateFormSubmit").click(function (e) {
+        jQuery("#TemplateCreateForm").submit();
+    });
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+

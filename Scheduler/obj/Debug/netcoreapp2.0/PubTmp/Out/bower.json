@@ -1,0 +1,26 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery-validation-unobtrusive": "^3.2.6",
+    "devextreme": "17.2.7",
+    "devextreme-aspnet-data": "1.4.2",
+    "bootstrap-social": "v4.10.1",
+    "font-awesome": "Font-Awesome#v4.7.0",
+    "raphael": "v2.2.7",
+    "simple-line-icons": "v0.1.2",
+    "popper.js": "v1.14.3",
+    "jquery-animateNumber": "v0.0.14",
+    "animate.css": "v3.1.0",
+    "icomoon-bower": "icomoon#0.1.2",
+    "owl.carousel": "owl-carousel2#2.3.3",
+    "moment": "2.22.1"
+  },
+  "resolutions": {
+    "bootstrap": "^4.0.0",
+    "font-awesome": "v4.7.0",
+    "bootstrap-social": "v4.10.1",
+    "metisMenu": "v2.7.4"
+  }
+}

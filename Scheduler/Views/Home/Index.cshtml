@@ -1,0 +1,181 @@
+﻿@using System.Globalization
+@using Scheduler.ViewModels
+
+@model PageIndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutPage";
+}
+
+<section class="probootstrap-features-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md probootstrap-feature-item" style="background-image: url(/lib/theme-health/images/img_1.jpg);">
+                <div class="probootstrap-feature-item-text">
+                    <span class="icon"><i class="flaticon-first-aid-kit display-4"></i></span>
+                    <h2>Medical <span>Emergencies</span></h2>
+                </div>
+            </div>
+            <div class="col-md probootstrap-opening">
+                <h2 class="text-uppercase mb-3">Opening Hour <span>Medical Center</span></h2>
+                <ul class="list-unstyled probootstrap-schedule">
+                    <li>Mon-Fri <span>5:00-17:00</span></li>
+                    <li>Sat <span>6:30-17:00</span></li>
+                    <li>Sun <span>6:30-17:00</span></li>
+                </ul>
+            </div>
+            <div class="col-md probootstrap-feature-item" style="background-image: url(/lib/theme-health/images/img_2.jpg);">
+                <div class="probootstrap-feature-item-text">
+                    <span class="icon"><i class="flaticon-gym-control-of-exercises-with-a-list-on-a-clipboard-and-heart-beats display-4"></i></span>
+
+                    <h2>Medical <span>Treatment</span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="probootstrap-services">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-3 probootstrap-aside-stretch-left">
+                <div class="mb-3">
+                    @*<h2 class="h6">Departments</h2>
+                    <ul class="list-unstyled probootstrap-light mb-4">
+                        <li><a href="@Url.Action("Departments", "Home")#Urology">Urology</a></li>
+                        <li><a href="@Url.Action("Departments", "Home")#Pediatrics">Pediatrics</a></li>
+                        <li><a href="@Url.Action("Departments", "Home")#Psychiatrics">Psychiatrics</a></li>
+                        <li><a href="@Url.Action("Departments", "Home")#Plastic_Surgery">Plastic Surgery</a></li>
+                        <li><a href="@Url.Action("Departments", "Home")#Neurosurgery">Neurosurgery</a></li>
+                    </ul>
+                    <p><a href="@Url.Action("Departments", "Home")" class="arrow-link text-white">More departments  <i class="icon-chevron-right"></i></a></p>*@
+                </div>
+            </div>
+            <div class="col-md-9 pl-md-5 pl-0">
+                <div class="row mb-5">
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media d-block mb-4 text-left probootstrap-media">
+                            <div class="probootstrap-icon mb-3"><span class="flaticon-price-tag display-4"></span></div>
+                            <div class="media-body">
+                                <h3 class="h5 mt-0 text-secondary">Easy Registration</h3>
+                                <p>Register with Facebook, Google accounts or your email address.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media d-block mb-4 text-left probootstrap-media">
+                            <div class="probootstrap-icon mb-3"><span class="flaticon-shield-with-cross display-4"></span></div>
+                            <div class="media-body">
+                                <h3 class="h5 mt-0 text-secondary">Quality &amp; Safety</h3>
+                                <p>Our service is safe and easy to use.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media d-block mb-4 text-left probootstrap-media">
+                            <div class="probootstrap-icon mb-3"><span class="flaticon-first-aid-kit display-4"></span></div>
+                            <div class="media-body">
+                                <h3 class="h5 mt-0 text-secondary">Immidiate Service</h3>
+                                <p>You won't need to go out of your home to make an appointment.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media d-block mb-4 text-left probootstrap-media">
+                            <div class="probootstrap-icon mb-3"><span class="flaticon-microscope display-4"></span></div>
+                            <div class="media-body">
+                                <h3 class="h5 mt-0 text-secondary">Smartphone friendly</h3>
+                                <p>Our system works well with Tablets, Smartphones and PC.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media d-block mb-4 text-left probootstrap-media">
+                            <div class="probootstrap-icon mb-3"><span class="flaticon-gym-control-of-exercises-with-a-list-on-a-clipboard-and-heart-beats display-4"></span></div>
+                            <div class="media-body">
+                                <h3 class="h5 mt-0 text-secondary">Personalized Treatment</h3>
+                                <p>You will get notifications when you'll have an appointment with doctor.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media d-block mb-4 text-left probootstrap-media">
+                            <div class="probootstrap-icon mb-3"><span class="flaticon-doctor display-4"></span></div>
+                            <div class="media-body">
+                                <h3 class="h5 mt-0 text-secondary">Experienced Physicians</h3>
+                                <p>We work with experienced doctors having more than 10 years of practice.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="probootstrap-section overlay bg-image" style="background-image: url(/lib/theme-health/images/bg_1.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="text-white display-4">Specialists in Family  Healthcare</h2>
+                <p class="text-white mb-5 lead">Far far away, behind the word mountains.</p>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-md-4"><a href="@Url.Action("Doctors", "User")" class="btn btn-secondary btn-block">Appointment <span class="icon-arrow-right"></span></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="probootstrap-section bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12 text-center">
+                <h2 class="h1"><a href="@Url.Action("Departments", "Home")">Our Doctors</a></h2>
+                <p class="lead text-secondary">Passionate About Medicine. Compassionate About People.</p>
+            </div>
+        </div>
+        <div class="row no-gutters">
+
+            @foreach (var doc in Model.Doctors)
+            {
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6 prbootstrap-team">
+                    <img src="/Doctor/Avatar/@doc.ID?timestamp=@DateTime.Now" alt="Doctor @doc.FullName" class="img-fluid">
+                    <div class="probootstrap-person-text">
+                        <span class="title">@doc.Position</span>
+                        <span class="name">Dr. @doc.FullName</span>
+                    </div>
+                </div>
+
+                @*<div class="col-lg-3 col-md-3 col-sm-6 col-6 prbootstrap-team">
+                        <img src="/lib/theme-health/images/person_1.jpg" alt="Free Template by uicookies.com" class="img-fluid">
+                        <div class="probootstrap-person-text">
+                            <span class="title">Medical Doctor</span>
+                            <span class="name">Dr. Abbey Smith</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6 prbootstrap-team">
+                        <img src="/lib/theme-health/images/person_2.jpg" alt="Free Template by uicookies.com" class="img-fluid">
+                        <div class="probootstrap-person-text">
+                            <span class="title">Medical Doctor</span>
+                            <span class="name">Dr. Ben Carpio</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6 prbootstrap-team">
+                        <img src="/lib/theme-health/images/person_3.jpg" alt="Free Template by uicookies.com" class="img-fluid">
+                        <div class="probootstrap-person-text">
+                            <span class="title">Medical Doctor</span>
+                            <span class="name">Dr. Louisa Westwood</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6 prbootstrap-team">
+                        <img src="/lib/theme-health/images/person_4.jpg" alt="Free Template by uicookies.com" class="img-fluid">
+                        <div class="probootstrap-person-text">
+                            <span class="title">Cardiac Surgeon</span>
+                            <span class="name">Dr. Mark Sebastian</span>
+                        </div>
+                    </div>*@
+            }
+        </div>
+    </div>
+</section>

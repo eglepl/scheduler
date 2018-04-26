@@ -1,0 +1,300 @@
+﻿@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+@using System.Collections.Generic
+
+@model Scheduler.ViewModels.HealthCenter.DoctorViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_LayoutAdmin";
+}
+
+<style>
+
+    .image-cropper {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+
+        .image-cropper img {
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
+        }
+</style>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            @if (User.IsInRole("Admin"))
+            {
+            <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="DoctorsList">Back to List</a>
+            }
+            @if (User.IsInRole("Patient"))
+            {
+            <a class="btn btn-outline-primary" asp-controller="User" asp-action="Doctors">Back to List</a>
+            }
+            
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewData["ErrorMessage"]
+            </div>
+        }
+        @if (ViewData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewData["SuccessMessage"]
+            </div>
+        }
+
+        <div id="messages-container">
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+            <div class='form-avatar'>
+                <div class="image-cropper">
+                    <img id="doctor-image" class="" src="@Url.Action("Avatar", "Doctor", new { id = Model.ID })" />
+                </div>
+            </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row p-1">
+            <div class="font-weight-bold col-sm-2">
+                Full Name:
+            </div>
+            <div class="col-sm">
+                @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+            </div>
+        </div>
+        <div class="row p-1">
+            <div class="font-weight-bold col-sm-2">
+                Phone:
+            </div>
+            <div class="col-sm">
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </div>
+        </div>
+        <div class="row p-1">
+            <div class="font-weight-bold col-sm-2">
+                @Html.DisplayNameFor(model => model.EMail):
+            </div>
+            <div class="col-sm">
+                @Html.DisplayFor(model => model.EMail)
+            </div>
+        </div>
+        <div class="row p-1">
+            <div class="font-weight-bold col-sm-2">
+                @Html.DisplayNameFor(model => model.Notes):
+            </div>
+            <div class="col-sm">
+                @Html.DisplayFor(model => model.Notes)
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<style>
+    .make-an-appointment-card{
+        margin-bottom: 54px;
+        margin-top: 33px;
+    }
+    .make-an-appointment-card .card-header{
+        font-size: 20px;
+    }
+
+    .make-an-appointment-card .dx-field-value {
+        float:left;
+        padding: 10px;
+    }
+
+    .make-an-appointment-card .dx-item {
+        padding: 5px;
+    }
+
+    .makeAnAppointment {
+        position: relative;
+    }
+    
+    .loading-card {
+        position: absolute;
+        background: #fff;
+        width: 100%;
+        /* height: 85%; */
+        z-index: 10;
+        font-size: 132px;
+        text-align: center;
+        bottom: 40px;
+        height: 86%;
+        opacity: 0.7;
+    }
+
+    @@media (max-width: 960px) {
+        .loading-card {
+            font-size: 60px;
+        }
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-2">
+            <div class="card-header">
+                New Appointment
+            </div>
+            <div class="card-body">
+                <div id="makeAnAppointment">
+                    <div class="loading-card loading d-none"><i class="fa fa-spinner fa-spin"></i></div>
+                    <form id="createAppointmentForm" method="post">
+                        <input type="hidden" name="action" value="add-visit" />
+                        <input type="hidden" name="DoctorID" value="@Model.ID" />
+                        <div class="form-group">
+                            <label for="visitDateTimeInput">Visit Date Time</label>
+                            <input type="hidden" name="VisitDateTime" id="visitDateTimeInput" />
+                            <input type="text"  class="form-control" id="visitDateTimeInputDisplay" readonly="readonly" placeholder="Choose desired appointment time in the table">
+                        </div>
+                        <div class="form-group">
+                            <label>Select a person</label>
+                            @(Html.DevExtreme().SelectBox()
+                     .DataSource(d => d.RemoteController()
+                         .LoadUrl("/api/UserPeopleWebApi/People")
+                         .Key("ID")
+                     )
+                     .DisplayExpr(new JS("patientDisplayExpr"))
+                     .ValueExpr("ID")
+                     .Name("PatientID")
+                     .ItemTemplate(@<text>
+                    <div class="patient-item">
+                        <img src="/UserPeople/Avatar/<%=ID%>" style="height:50px;" />
+                        <%= FirstName %> <%= LastName %> <%= IsBanned ? '(Banned)': '' %>
+                    </div>
+                    </text>)
+                            )
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">Notes</label>
+                            @(Html.DevExtreme().TextArea()
+                    .ID("appointment-patient-notes")
+                    .Name("PatientNotes")
+                            )
+                        </div>
+                        <div class="form-group">
+                            <button id="submitAppointmentButton" type="submit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading d-none"></i> Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-2">
+            <div class="card-header">
+                Free Appointment Times
+            </div>
+            <div class="card-body">
+                @(Html.DevExtreme().DataGrid<DoctorScheduleTime>()
+                                            .ID("doctorScheduleVisitTimeGridContainer")
+                                            .DataSource(d => d.RemoteController()
+                                                .LoadUrl("/api/DoctorWebApi/FreeVisitTimes/" + Model.ID)
+                                                )
+                                            .Paging(paging => paging.Enabled(true).PageSize(6))
+                                            .Selection(s => s.Mode(SelectionMode.Single))
+                                            .HoverStateEnabled(true)
+                                            .OnSelectionChanged("selection_changed")
+                                            .RemoteOperations(true)
+                                            .Columns(columns =>
+                                            {
+                                                columns.AddFor(m => m.VisitDateTime)
+                                                    .AllowEditing(false)
+                                                    .SortOrder(SortOrder.Asc)
+                                                    .Format("yyyy-MM-dd HH:mm (EEEE)")
+                                                    .Caption("Free Visit Times");
+                                            })
+                                            .RowAlternationEnabled(true)
+                )
+            </div>
+        </div>
+    </div>
+
+    <script>
+            function selection_changed(selectedItems) {
+                var data = selectedItems.selectedRowsData[0];
+                if (data) {
+                    var dateString = data.VisitDateTime;
+                    $("#visitDateTimeInputDisplay").attr("value", moment(dateString).format("YYYY-MM-DD HH:mm (dddd)"));
+                    $("#visitDateTimeInput").attr("value", moment(dateString).format("YYYY-MM-DD HH:mm"));
+                }
+            }
+
+            function patientDisplayExpr(e) {
+                if (e) {
+                    console.log(e);
+                    var title = e.FirstName + " " + e.LastName;
+                    if (e.IsBanned) { 
+                        title += " (Banned)";
+                    }
+                    return title;
+                }
+                return "";
+            }
+
+            $("#createAppointmentForm").on("submit", function (event) {
+                event.preventDefault();
+                var data = jQuery(this).serialize();
+                //console.log(["form data", data]);
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/api/UserVisitsWebApi/Create",
+                    data: data,
+
+                    error: function (resultData, textStatus, jqXHR) {
+                        var errorMessage = resultData.responseJSON.errorMessage || "Unknown error";
+                        jQuery("#messages-container").html('<div class="alert alert-danger" role="alert">' +
+                            errorMessage + '</div>');
+                        $(".loading").addClass("d-none");
+                    },
+
+                    success: function (resultData, textStatus, jqXHR) {
+                        var successMessage = resultData.successMessage || "Success";
+                        jQuery("#messages-container").html('<div class="alert alert-success" role="alert">' +
+                            successMessage + '</div>');
+                        $("#doctorScheduleVisitTimeGridContainer").dxDataGrid('instance').refresh();
+
+                        $("#visitDateTimeInputDisplay").attr("value", "");
+                        $("#visitDateTimeInput").attr("value", "");
+
+                        $(".loading").addClass("d-none");
+                    },
+                    dataType: "json"
+                });
+                $(".loading").removeClass("d-none");
+            });
+
+    </script>
+
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+
+    <title>@ViewData["Title"] - Medical Center</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css">
+
+    <link rel="stylesheet" href="~/lib/owl.carousel/dist/assets/owl.carousel.css">
+    <link rel="stylesheet" href="~/lib/owl.carousel/dist/assets/owl.theme.default.css">
+    <link rel="stylesheet" href="~/lib/icomoon-bower/style.css">
+    <link rel="stylesheet" href="~/lib/theme-health/css/flaticon.css">
+    <link rel="stylesheet" href="~/lib/animate.css/animate.css">
+    <link rel="stylesheet" href="~/lib/theme-health/css/style.css">
+    <link rel="stylesheet" href="~/css/page.css">
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/popper.js/dist/umd/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/owl.carousel/dist/owl.carousel.js"></script>
+    <script src="~/lib/jquery-animateNumber/jquery.animateNumber.js"></script>
+    <script src="~/lib/theme-health/js/main.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark probootstrap-navbar-dark">
+        <div class="container">
+            @*<a class="navbar-brand" href="index.html">Health</a>*@
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-nav" aria-controls="probootstrap-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="probootstrap-nav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a href="@Url.Action("Index", "Home")" class="nav-link pl-0">Home</a></li>
+                    @*<li class="nav-item"><a href="@Url.Action("Departments", "Home")" class="nav-link">Departments</a></li>
+                    <li class="nav-item"><a href="@Url.Action("About", "Home")" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="@Url.Action("Contacts", "Home")" class="nav-link">Contacts</a></li>*@
+                    <li class="nav-item"><a href="@Url.Action("Login", "Account")" class="nav-link">Login</a></li>
+                </ul>
+                @*<div class="ml-auto">
+                    <form action="#" method="get" class="probootstrap-search-form mb-sm-0 mb-3">
+                        <div class="form-group">
+                            <button class="icon submit"><span class="icon-magnifying-glass"></span></button>
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                    </form>
+                </div>*@
+            </div>
+        </div>
+    </nav>
+    <!-- END nav -->
+    <header role="banner" class="probootstrap-header py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <a href="/" class="mr-auto"><img src="/images/logo.png" class="hires" style="width:250px;"></a>
+                </div>
+                <div class="col-md-9">
+                    <div class="float-md-right float-none">
+                        <div class="probootstrap-contact-phone d-flex align-items-top mb-3 float-left">
+                            <span class="icon mr-2"><i class="icon-phone"></i></span>
+                            <span class="probootstrap-text"> +370 600 00000 <small class="d-block"><a href="@Url.Action("Index", "Dashboard")" class="arrow-link">Appointment <i class="icon-chevron-right"></i></a></small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="mb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-5">
+                    <h1 class="display-4">The Future Of Medical Care</h1>
+                    <p class="lead text-secondary"><a href="@Url.Action("Register", "Account")">Manage your appointments with your doctors without worries.</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @RenderBody()
+
+    <footer class="probootstrap-footer">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h3 class="heading">Head Office</h3>
+                    <p class="mb-5">98 West 21th Street, Suite 721 New York NY 10016</p>
+                    <h3 class="heading text-white">Open</h3>
+                    <p>
+                        Mon-Fri 7:30-18:00 <br>
+                        Sat 7:30-18:00 <br>
+                        Sun 7:30-18:00
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="heading">Quick Links</h3>
+                    <ul class="list-unstyled probootstrap-footer-links">
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        @*<li><a href="@Url.Action("Departments", "Home")">Departments</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("Contacts", "Home")">Contacts</a></li>*@
+                    </ul>
+                </div>
+                @*<div class="col-md-3">
+                    <h3 class="heading">Follow us</h3>
+                    <ul class="probootstrap-footer-social">
+                        <li><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                    </ul>
+                </div>*@
+            </div>
+            <!-- END row -->
+        </div>
+    </footer>
+    <!-- loader -->
+    <div id="probootstrap-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#32609e" /></svg></div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

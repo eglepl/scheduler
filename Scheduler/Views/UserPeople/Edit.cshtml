@@ -1,0 +1,219 @@
+﻿@using System.IO
+@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+@using System.Collections.Generic
+
+@model Scheduler.ViewModels.HealthCenter.PatientViewModel
+
+@{
+    ViewData["Title"] = "Edit Patient";
+    Layout = "_LayoutAdmin";
+}
+
+<style>
+
+    .image-cropper {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+
+        .image-cropper img {
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
+        }
+</style>
+
+<script>
+    var EditPatientAfterAvatarUpload = function (e){
+        jQuery("#patient-image").attr("src", "@Url.Action("Avatar", "UserPeople", new { id = Model.ID })?timestamp=" + (new Date().getTime()));
+    }
+
+    var SexWidgedLoaded = function (e) {
+        console.log(e);
+        e.value = "@Model.Sex";
+    }
+
+</script>
+<script>
+            var JsSexEnum = [
+                {
+                    Name: "@Person.SexEnum.Male",
+                    Key: @((int)Person.SexEnum.Male)
+                },
+                {
+                    Name: "@Person.SexEnum.Female",
+                    Key: @((int)Person.SexEnum.Female)
+                }
+            ];
+
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            <button id="PatientEditFormSubmit" class="btn btn-primary">Save</button>
+            <a class="btn btn-outline-primary" asp-controller="UserPeople" asp-action="People">Back to List</a>
+            <button class="btn btn-danger patient-delete-action">Delete</button>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div id="alert-container" class="col-md-12">
+        @if (ViewData["SuccessMessageCreatedPerson"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewData["SuccessMessageCreatedPerson"]
+            </div>
+        }
+        @if (ViewData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewData["SuccessMessage"]
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Edit", "UserPeople", FormMethod.Post, new { Id = "PatientEditForm" }))
+        {
+            @Html.Hidden("ID")
+            @(Html.DevExtreme().Form<PatientViewModel>()
+                            .ID("form")
+                            .Items(items =>
+                            {
+                                items.AddGroup()
+                .CssClass("first-group")
+                .ColCount(4)
+                .Items(groupItems =>
+                {
+                        groupItems.AddSimple().Template(@<div class='form-avatar'>
+                            <div class="image-cropper">
+                                <img id="patient-image" class="" src="@Url.Action("Avatar", "UserPeople", new { id = Model.ID, timestamp = DateTime.Now })" />
+                            </div>
+                            <div class="">
+                                @(Html.DevExtreme().FileUploader()
+                                                    .ID("file-uploader")
+                                                    .Name("AvatarFile")
+                                                    .Multiple(false)
+                                                    .Accept("image/png,image/jpg")
+                                                    .UploadMode(FileUploadMode.Instantly)
+                                                    .UploadUrl(Url.Action("AvatarUpload", "UserPeople", new { id = Model.ID }))
+                                                    .OnUploaded("EditPatientAfterAvatarUpload")
+                                )
+                            </div>
+                        </div>);
+                                            groupItems.AddGroup().ColSpan(3).Items(secondGroupItems =>
+                                            {
+                                                secondGroupItems.AddSimpleFor(m => m.FirstName);
+                                                secondGroupItems.AddSimpleFor(m => m.LastName);
+                                                secondGroupItems.AddSimpleFor(m => m.Sex)
+                                                    .Editor(e => e
+                                                        .RadioGroup()
+                                                            .DataSource(d => d.Array().Data(new List<string> { "Male", "Female" }))
+                                                            .Value(Enum.GetName(typeof(Person.SexEnum), Model.Sex))
+                                                );
+                                                secondGroupItems.AddSimpleFor(m => m.BirthDate)
+                                                    .Editor(e => e
+                                                        .DateBox()
+                                                        .Width("100%")
+                                                    )
+                                                    .IsRequired(false);
+                                                secondGroupItems.AddSimpleFor(m => m.PersonalCode);
+                                            });
+                                        });
+
+
+                                                    items.AddGroup()
+                                    .CssClass("second-group")
+                                    .ColCount(2)
+                                    .Items(groupItems =>
+                                    {
+                                        groupItems.AddGroup().Items(secondGroupItems =>
+                                {
+                                                secondGroupItems.AddSimpleFor(m => m.Address);
+                                                secondGroupItems.AddSimpleFor(m => m.City);
+                                               
+                                            });
+                                        groupItems.AddGroup().Items(secondGroupItems =>
+                                {
+                                                secondGroupItems.AddSimpleFor(m => m.PhoneNumber)
+                                                    .Editor(e => e
+                                                        .TextBox()
+                                                    );
+                                                secondGroupItems.AddSimpleFor(m => m.EMail);
+
+                                            });
+
+                                        groupItems.AddSimpleFor(m => m.Notes)
+                                .ColSpan(2)
+                                .Editor(e => e
+                                    .TextArea()
+                                    .Height(140)
+                                );
+                                    });
+                                                })
+                                                                    .FormData(Model)
+            )
+        }
+    </div><!-- col-md-12-->
+</div>
+
+<script>
+
+    jQuery(".patient-delete-action").click(function(e) {
+        var result = DevExpress.ui.dialog.confirm("Are you sure you want to delete this patient?", "Confirm delete");
+        result.done(function (dialogResult) {
+            if (dialogResult) {
+                jQuery.ajax({
+                    url: '/api/UserPeopleWebApi/PatientDelete/@(Model.ID)',
+                    type: 'POST',
+                    success: function (response, status) {
+                        if (response.success == false) {
+                            console.log([response, status]);
+
+                            jQuery('#alert-container .patient-delete-action-alert')
+                                .remove();
+
+                            jQuery('#alert-container')
+                                .append(
+                                '<div class="alert alert-danger patient-delete-action-alert" role="alert">' + response.errorMessage + '</div > '
+                                );
+
+                        } else {
+                            
+                            window.location = "/UserPeople/People";
+
+                        }
+
+                    }
+            });
+        }
+    });
+
+
+        console.log(e);
+    });
+
+
+
+    jQuery("#PatientEditFormSubmit").click(function (e) {
+        jQuery("#PatientEditForm").submit();
+    });
+
+</script>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

@@ -1,0 +1,57 @@
+﻿@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+
+@{
+    ViewData["Title"] = "All Visits";
+    Layout = "_LayoutAdmin";
+}
+
+<h2>All Visits</h2>
+
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.DevExtreme().DataGrid<UserVisitViewModel>()
+            .DataSource(d => d.Mvc()
+                .Controller("UserVisitsWebApi")
+                .LoadAction("Visits")
+                .DeleteAction("VisitDelete")
+                .Key("ID")
+            )
+            .RemoteOperations(true)
+            .OnCellPrepared("userVisitsDataGridOnCellPrepared")
+            .Editing(editing =>
+            {
+                editing.Mode(GridEditMode.Row);
+                editing.AllowDeleting(true);
+
+            })
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.VisitDateTime).Format("yyyy-MM-dd HH:mm").SortOrder(SortOrder.Desc);
+                columns.AddFor(m => m.DoctorFullName);
+                columns.AddFor(m => m.PatientFullName);
+            })
+            .SearchPanel(searchPanel => searchPanel
+            .Visible(true)
+            .Width(240)
+            .Placeholder("Search..."))
+            .GroupPanel(p => p.Visible(true))
+            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+            .Height(600)
+            .ShowBorders(true)
+        )
+    </div>
+</div>
+
+<script>
+    var userVisitsDataGridOnCellPrepared = function (e) {
+        var now = moment('@String.Format("{0:yyyy-MM-dd HH:mm}", DateTime.Now)');
+        if (e.rowType == "data" && e.columnIndex == 3) {
+            if (moment(e.data.VisitDateTime) < now) {
+                e.cellElement.find(".dx-link-delete").remove();
+            }
+        }
+    }
+</script>

@@ -1,0 +1,97 @@
+﻿@using Scheduler.ViewModels.HealthCenter
+@using Scheduler.Models.HealthCenter
+
+@{
+    ViewData["Title"] = "Doctors List";
+    Layout = "_LayoutAdmin";
+}
+
+<style>
+    .disabled-row{
+        color: #ccc;
+    }
+</style>
+
+<h2>Doctors List</h2>
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group">
+            <a class="btn btn-outline-primary" href="@Url.Action("Create", "Doctor")">Add Doctor</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <script>
+            var JsSexEnum = [
+                {
+                    Name: "@Person.SexEnum.Male",
+                    Key: @((int)Person.SexEnum.Male)
+                },
+                {
+                    Name: "@Person.SexEnum.Female",
+                    Key: @((int)Person.SexEnum.Female)
+                },
+            ];
+
+        </script>
+        @(Html.DevExtreme().DataGrid<DoctorViewModel>()
+                                    .DataSource(d => d.Mvc()
+                                        .Controller("AdminWebApi")
+                                        .LoadAction("DoctorsList")
+                                        .UpdateAction("DisableDoctor")
+                                        .Key("ID")
+                                    )
+                                        .RemoteOperations(true)
+                                        .OnRowPrepared("DoctorsGridOnRowPrepared")
+                                        .Columns(columns =>
+                                        {
+                                        columns.AddFor(m => m.FirstName);
+                                        columns.AddFor(m => m.LastName);
+                                        columns.AddFor(m => m.BirthDate);
+
+                                        columns.AddFor(m => m.Sex).Lookup(lookup => lookup
+                                .DataSource(new JS("JsSexEnum"))
+                                .DisplayExpr("Name")
+                                .ValueExpr("Key")
+                            );
+                                        columns.AddFor(m => m.PhoneNumber);
+                                        columns.AddFor(m => m.EMail);
+                                        columns.AddFor(m => m.FreeVisitsCount);
+                                        columns.AddFor(m => m.ID).CellTemplate(
+                                        @<text>
+                                       
+                                        <a class="btn btn-info btn-sm" href="@Url.Action("Details", "Doctor")/<%= value %>">Details</a>
+                                        <a class="btn btn-primary btn-sm" href="@Url.Action("Edit", "Doctor")/<%= value %>">Edit</a>
+
+                                        </text>
+                                                                                                                    ).Width("120px").HeaderCellTemplate(@<div class="dx-datagrid-text-content dx-datagrid-action-column">Actions</div>);
+
+
+                                                                                                                                               
+})
+        .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+        .Placeholder("Search..."))
+        .GroupPanel(p => p.Visible(true))
+        .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+        .Height(600)
+        .ShowBorders(true)
+)
+    </div>
+</div>
+
+<script>
+    function DoctorsGridOnRowPrepared(e)
+    {
+        if (e.rowType == "data" && e.data.IsDisabled == true) {
+            e.rowElement.addClass("disabled-row");
+            console.log(e.rowElement);
+        }
+    
+    }
+</script>

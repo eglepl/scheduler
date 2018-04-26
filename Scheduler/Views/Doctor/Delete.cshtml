@@ -1,0 +1,33 @@
+﻿@*@model Scheduler.ViewModels.HealthCenter.DoctorViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div>
+    <h4>Doctor</h4>
+    <hr />
+    <div>
+        <ul>
+
+            <li>@Model.Name</li>
+            <li>@Model.LastName</li>
+            <li>@Model.BirthDate</li>
+            <li>@Model.Sex</li>
+            <li>@Model.PersonalCode</li>
+            <li>@Model.LicenceNumber</li>
+
+        </ul>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    @Html.Hidden("ID")
+    <input type="submit" value="Delete" class="btn btn-default" /> |
+    <a asp-controller="Admin" asp-action="DoctorsList">Back to List</a>
+</form>
+</div>*@

@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutAdmin";
+}
+
+<h2>Dashboard</h2>
+
+@*@if (User.IsInRole("Patient"))
+{
+    Html.RenderPartial("../User/Visits");
+}
+@if (User.IsInRole("Admin"))
+{
+    Html.RenderPartial("../Admin/DoctorsList");
+
+}*@
