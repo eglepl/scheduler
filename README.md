@@ -1,6 +1,33 @@
+Author: Eglė Plėštytė
+Organization: Mathemathics and Informatics faculty, Vilnius University
+Date: 2018-04-25
+
+
+Description
+===========
+
+Scheduler is an application for a medical center patients who would like 
+to create an appointments with medical center doctors over the internet.
+
+Its is an ASP.NET Core 2.0 web application written using C# language.
+
+Basic user steps to use the Scheduler Medical System.
+ - Users can register or login with Google or Facebook OAuth system.
+ - User must add one or more people to his account.
+ - Select a doctor to make an appointment with
+ - Make an appointments with the doctor by selecting appointment time.
+ - Person gets a notification of his appointment with a doctor 24 hours 
+	before the meeting (using email).
+ - User can cancel his appointments.
+ 
+
+Steps to run the application
+============================
+
 To run the project, you need to import scheduler.sql to your database.
-Also you need to make some configuration:
-	- Create appsettings.json file
+Also you need to make some configurations.
+
+	- Create appsettings.json file by the template template:
 ```	{
 	  "ConnectionStrings": {
 		"DefaultConnection": "[Your MS SQL Server connection string]"
